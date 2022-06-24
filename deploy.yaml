@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Building Docker image
+      shell: docker build -t TestWebApp:v1 .
+    - name: Deploy the container
+      shell: docker run -itd -p 8080:8080 TestWebApp:v1
