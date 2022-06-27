@@ -4,4 +4,4 @@
     - name: Building Docker image
       shell: docker build -t testwebapp:v1 .
     - name: Deploy the container
-      shell: docker run -itd -p 80:8080 testwebapp:v1
+      shell: docker run --rm -itd -p 80:8080 testwebapp:v1
