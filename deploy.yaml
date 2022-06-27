@@ -3,7 +3,7 @@
   tasks:
     - name: Building Docker image
       shell: docker build -t testwebapp:v1 .
-    - name: Stop Existing Container with old version artifact
+    - name: remove Existing Container with old version artifact
       shell: docker rm -f testwebapp
     - name: Deploy the container
       shell: docker run --rm -itd -p 80:8080 --name testwebapp testwebapp:v1
