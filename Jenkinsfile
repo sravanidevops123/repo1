@@ -79,6 +79,7 @@ then
 echo "localhost ansible_user='sravs' ansible_password='Devops@123' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
 else
 echo "entered wrong parameter"
+echo ""> hosts
 fi
 
 cat hosts
