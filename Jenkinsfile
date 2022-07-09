@@ -63,6 +63,26 @@ stages{
 		}
 	}
 */
+	stage("Hosts FIle"){
+		steps{
+sh '''
+if [${ENV} = "qa"]
+then
+echo "13.208.241.61 ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
+
+elif [${ENV} = "perf"]
+then
+echo "15.152.33.17 ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'"> hosts
+
+elif [${ENV} = "uat"]
+then
+echo "localhost ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
+else
+echo "entered wrong parameter"
+fi
+'''
+		}
+	}
 	stage("Deploy to Host"){
 		steps{
 			echo "Deploying into Docker"
