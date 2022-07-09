@@ -65,7 +65,7 @@ stages{
 		steps{
 			echo "Deploying into Docker"
 			//sh "ansible-playbook deploy.yaml"
-			sh "ansible-playbook deploy.yaml --limit '${ENV}'"
+			sh "ansible-playbook deploy.yaml --limit '${ENV}' -i hosts"
 		}
 	}
 }
