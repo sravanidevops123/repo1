@@ -10,6 +10,8 @@ tools {
 		jdk 'JDK8u221'
     }
 
+parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
+	
 triggers {
   GenericTrigger(causeString: 'Generic Cause because of new Commit appeared', regexpFilterExpression: '', regexpFilterText: '', token: '1212', tokenCredentialId: '')
 }
@@ -62,7 +64,8 @@ stages{
 	stage("Deploy to Host"){
 		steps{
 			echo "Deploying into Docker"
-			sh "ansible-playbook deploy.yaml"
+			//sh "ansible-playbook deploy.yaml"
+			sh "ansible-playbook deploy.yaml --limit '${ENV}'"
 		}
 	}
 }
