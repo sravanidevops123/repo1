@@ -1,0 +1,8 @@
+[qa]
+13.208.248.44 ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[perf]
+15.152.33.17 ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[uat]
+localhost ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'
