@@ -80,6 +80,8 @@ echo "localhost ansible_user='sravs' ansible_password='Devops@123' ansible_ssh_c
 else
 echo "entered wrong parameter"
 fi
+
+cat hosts
 '''
 		}
 	}
