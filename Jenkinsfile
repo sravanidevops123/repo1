@@ -9,13 +9,13 @@ tools {
     maven 'maven-3.6.3'
 		jdk 'JDK8u221'
     }
-*/
+
 parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
 	
 triggers {
   GenericTrigger(causeString: 'Generic Cause because of new Commit appeared', regexpFilterExpression: '', regexpFilterText: '', token: '1212', tokenCredentialId: '')
 }
-
+*/
 stages{
 	stage("Compile"){
 		steps{
