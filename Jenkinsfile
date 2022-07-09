@@ -89,7 +89,7 @@ cat hosts
 		steps{
 			echo "Deploying into Docker"
 			//sh "ansible-playbook deploy.yaml"
-			sh "ansible-playbook deploy.yaml --limit '${ENV}' -i hosts"
+			sh "ansible-playbook deploy.yaml -i hosts"
 		}
 	}
 }
