@@ -1,4 +1,5 @@
 ---
+- hosts: all
   tasks:
     - name: Building Docker image
       shell: docker build -t testwebapp:v1 .
