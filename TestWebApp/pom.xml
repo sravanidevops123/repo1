@@ -44,8 +44,8 @@
  </repository>
  
  <repository>
-  <id>vineetmanohar-nexus</id>
-  <name>vineetmanohar</name>
+  <id>lti-nexus</id>
+  <name>lti</name>
   <url>http://65.2.5.222:8081/repository/lti-repo/</url>
   <releases>
    <enabled>true</enabled>
