@@ -3,12 +3,12 @@
   tasks:
     - name: Building Docker image
       local_action: command docker build -t testwebapp:v1 .
-    - name: Make image as Tar
-      local_action: command docker save -o testwebapp.tar testwebapp:v1 
-    - name: Copying Tar file
-      copy: src="testwebapp.tar" dest="~/"
-    - name: load image from tar file
-      command: docker load ~/testwebapp.tar
+#    - name: Make image as Tar
+#      local_action: command docker save -o testwebapp.tar testwebapp:v1 
+#    - name: Copying Tar file
+#      copy: src="testwebapp.tar" dest="~/"
+#    - name: load image from tar file
+#      command: docker load ~/testwebapp.tar
     - name: remove Existing Container with old version artifact
       shell: docker rm -f testwebapp
     - name: Deploy the container
