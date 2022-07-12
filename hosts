@@ -6,4 +6,4 @@
 
 #[uat]
 #localhost ansible_user='sravs' ansible_password='Devops@123' ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-localhost
+localhost ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'
