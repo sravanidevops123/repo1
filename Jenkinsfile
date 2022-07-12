@@ -38,7 +38,7 @@ stages{
 	
   	stage("Static Code Analysis"){
 		steps{
-		   withSonarQubeEnv('http://13.232.250.14:9000/') {
+		   withSonarQubeEnv('Sonarqube') {
 			withCredentials([string(credentialsId: 'Sonarqube-creds', variable: 'TOKEN')]) {
 			dir('TestWebApp'){
 			echo "Sending Test reports to SonarQube"
