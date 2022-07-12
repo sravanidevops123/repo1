@@ -48,7 +48,7 @@ stages{
 			}
 		}
 	}
-	
+/*	
 	 stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
@@ -56,7 +56,7 @@ stages{
               }
             }
           }
-
+*/
 	stage("Packaging"){
 		steps{
 			dir('TestWebApp'){
