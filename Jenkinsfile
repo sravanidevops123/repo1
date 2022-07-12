@@ -43,6 +43,7 @@ stages{
 			dir('TestWebApp'){
 			echo "Sending Test reports to SonarQube"
 				sh "mvn sonar:sonar -Dsonar.login=${TOKEN}"
+					}
 				}
 			}
 		}
