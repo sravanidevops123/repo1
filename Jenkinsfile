@@ -65,7 +65,7 @@ stages{
 			}
 		}
 	}
-
+/*
   stage("Deploy to Nexus"){
 		steps{
 			withCredentials([usernamePassword(credentialsId: 'Nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -76,7 +76,7 @@ stages{
 		}
 	}
   }
-/*
+
 	stage("Hosts File"){
 		when { equals expected: 'qa', actual: "${ENV}" }
 		steps{
