@@ -1,0 +1,18 @@
+<servers>
+    <server>
+      <username>username</username>
+      <password>AP56eMPz8L12T5u4J6rWdqWqyhQ</password>
+      <id>lti-release-nexus</id>
+    </server>
+    <server>
+      <username>username</username>
+      <password>AP56eMPz8L12T5u4J6rWdqWqyhQ</password>
+      <id>lti-snapshots-nexus</id>
+    </server>
+    <server>
+      <username></username>
+      <password></password>
+      <id>lti-nexus</id>
+    </server>
+      
+</servers>
