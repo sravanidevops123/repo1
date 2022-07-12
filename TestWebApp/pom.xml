@@ -22,14 +22,14 @@
   <distributionManagement>
  <!-- Publish the versioned releases here -->
  <repository>
-  <id>release-nexus</id>
+  <id>lti-release-nexus</id>
   <name>release-nexus</name>
   <url>http://65.2.5.222:8081/repository/lti-repo/</url>
  </repository>
 
  <!-- Publish the versioned releases here -->
  <snapshotRepository>
-  <id>snapshots-nexus</id>
+  <id>lti-snapshots-nexus</id>
   <name>snapshot-nexus</name>
   <url>http://65.2.5.222:8081/repository/lti-repo/</url>
  </snapshotRepository>
@@ -38,7 +38,7 @@
 <!-- download artifacts from this repo -->
 <repositories>
  <repository>
-  <id>vineetmanohar-nexus</id>
+  <id>lti-pub-nexus</id>
   <name>vineetmanohar</name>
   <url>http://65.2.5.222:8081/repository/maven-public/</url>
  </repository>
@@ -60,7 +60,7 @@
 <!-- download plugins from this repo -->
 <pluginRepositories>
  <pluginRepository>
-  <id>nexus</id>
+  <id>lti-nexus</id>
   <name>vineetmanohar</name>
   <url>http://65.2.5.222:8081/repository/maven-public/</url>
   <releases>
