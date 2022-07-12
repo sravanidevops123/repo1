@@ -75,6 +75,7 @@ stages{
 			}
 		}
 	}
+  }
 /*
 	stage("Hosts File"){
 		when { equals expected: 'qa', actual: "${ENV}" }
