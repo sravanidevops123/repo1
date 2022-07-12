@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
   tasks:
     - name: Building Docker image
       local_action: command docker build -t testwebapp:v1 .
