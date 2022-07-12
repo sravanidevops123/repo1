@@ -39,7 +39,7 @@ stages{
   stage("Static Code Analysis"){
 		steps{
 			dir('TestWebApp'){
-			echo "Generatating Artifact"
+			echo "Sending Test reports to SonarQube"
 			sh "mvn sonar:sonar -Dsonar.login=myAuthenticationToken "
 			}
 		}
@@ -53,7 +53,7 @@ stages{
 			}
 		}
 	}
-/*
+
   stage("Deploy to Nexus"){
 		steps{
 			dir('TestWebApp'){
@@ -62,8 +62,8 @@ stages{
 			}
 		}
 	}
-*/
-	stage("Hosts FIle"){
+/*
+	stage("Hosts File"){
 		when { equals expected: 'qa', actual: "${ENV}" }
 		steps{
 sh '''
@@ -87,6 +87,7 @@ cat hosts
 '''
 		}
 	}
+*/
 	stage("Deploy to Host"){
 		steps{
 			echo "Deploying into Docker"
