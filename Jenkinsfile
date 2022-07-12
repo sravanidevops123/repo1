@@ -71,7 +71,7 @@ stages{
 			withCredentials([usernamePassword(credentialsId: 'Nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			dir('TestWebApp'){
 			echo "Deploying Artifact to Nexus"
-			sh "mvn deploy -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD}"
+			sh "mvn deploy -Dserver.username='admin' -Dserver.password='admin'"
 			}
 		}
 	}
