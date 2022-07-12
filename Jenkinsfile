@@ -35,16 +35,27 @@ stages{
 			}
 		}
 	}
-/*
-  stage("Static Code Analysis"){
+	
+  	stage("Static Code Analysis"){
 		steps{
+		   withSonarQubeEnv('http://13.232.250.14:9000/') {
+			withCredentials([string(credentialsId: 'Sonarqube-creds', variable: 'TOKEN')]) {
 			dir('TestWebApp'){
 			echo "Sending Test reports to SonarQube"
-			sh "mvn sonar:sonar -Dsonar.login=myAuthenticationToken "
+				sh "mvn sonar:sonar -Dsonar.login=${TOKEN}"
+				}
 			}
 		}
 	}
-*/
+	
+	 stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+
 	stage("Packaging"){
 		steps{
 			dir('TestWebApp'){
@@ -56,9 +67,10 @@ stages{
 
   stage("Deploy to Nexus"){
 		steps{
+			withCredentials([usernamePassword(credentialsId: 'Nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			dir('TestWebApp'){
 			echo "Deploying Artifact to Nexus"
-			sh "mvn deploy"
+			sh "mvn deploy -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD}"
 			}
 		}
 	}
