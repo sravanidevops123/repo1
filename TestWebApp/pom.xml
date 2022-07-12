@@ -24,14 +24,14 @@
  <repository>
   <id>release-nexus</id>
   <name>release-nexus</name>
-  <url>http://65.2.5.222:8081/repository/maven-releases/</url>
+  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
  </repository>
 
  <!-- Publish the versioned releases here -->
  <snapshotRepository>
   <id>snapshots-nexus</id>
   <name>snapshot-nexus</name>
-  <url>http://65.2.5.222:8081/repository/maven-snapshots/</url>
+  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
  </snapshotRepository>
 </distributionManagement>
 
@@ -41,6 +41,12 @@
   <id>vineetmanohar-nexus</id>
   <name>vineetmanohar</name>
   <url>http://65.2.5.222:8081/repository/maven-public/</url>
+ </repository>
+ 
+ <repository>
+  <id>vineetmanohar-nexus</id>
+  <name>vineetmanohar</name>
+  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
   <releases>
    <enabled>true</enabled>
   </releases>
