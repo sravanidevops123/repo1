@@ -34,19 +34,21 @@
       
 
     - name: Download tomcat 7
-      get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
+      get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="~/"
       when: not tomcatstatus.stat.exists
+
+    - name: Copy war file to webapps
+      command: "chown -R ec2-user:ec2-user /opt"
+      become: yes
 
     - name: extract tomcat7
       unarchive:
-        src: /opt/apache-tomcat-7.0.32.tar.gz
+        src: "~/apache-tomcat-7.0.32.tar.gz"
         dest: "/opt/"
         remote_src: yes
       when: not tomcatstatus.stat.exists
 
-    - name: Copy war file to webapps
-      command: "chown -R ec2-user:ec2-user {{ tomcat_home_dir }}"
-      become: yes
+
 
 
     - name: remove file tomcat.tar.gz
