@@ -1,11 +1,12 @@
 ---
 - hosts: all
   vars:
+    port: 8080
     tomcat_home_dir: "/opt/tomcat"
   tasks:
     - name: Check tomcat exists or not
       stat:
-        path: {{ tomcat_home_dir }}
+        path: "{{ tomcat_home_dir }}"
       register: tomcatstatus
     
     - name: shutting down tomcat
@@ -52,7 +53,7 @@
         chdir: "{{ tomcat_home_dir }}"
 
     - name: wait for stop
-      wait_for: port={{ port }} state=stopped
+      wait_for: port="{{ port }}" state=stopped
 
     - name: start tomcat
       command: startup.sh
@@ -60,4 +61,4 @@
         chdir: "{{ tomcat_home_dir }}/bin"
 
     - name: wait for start
-      wait_for: port={{ port }} state=started
+      wait_for: port="{{ port }}" state=started
