@@ -23,9 +23,10 @@
       args:
         chdir: "{{ tomcat_home_dir }}/bin"
       when: tomcatstatus.stat.exists
-      notify:
-      - wait for stop
-      
+
+    - name: wait for stop
+      wait_for: port="{{ port }}" state=stopped
+
     - name: remove old war file
       command: "rm -rf {{ tomcat_home_dir }}/webapps/TestWeb*" 
       when: tomcatstatus.stat.exists
@@ -33,20 +34,7 @@
     - name: Download tomcat 7
       get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
       when: not tomcatstatus.stat.exists
-      notify: 
-      - extract tomcat7
-      - remove file tomcat.tar.gz
-      
-    - name: Copy war file to webapps
-      copy: 
-        src: "TestWebApp/target/*.war"
-        dest: "{{ tomcat_home_dir }}/webapps"
-      notify:
-      - remove logs temp and work
-      - start tomcat
-      - wait for start 
 
-  handlers:
     - name: extract tomcat7
       unarchive:
         src: /opt/apache-tomcat-7.0.32.tar.gz
@@ -60,9 +48,17 @@
       command: "rm -rf work/* temp/* logs/*"
       args:
         chdir: "{{ tomcat_home_dir }}"
+      
+    - name: Copy war file to webapps
+      copy: 
+        src: "{{ item }}"
+        dest: "{{ tomcat_home_dir }}/webapps"
+      with_fileglob: "TestWebApp/target/*.war"
+      notify:
+      - start tomcat
+      - wait for start 
 
-    - name: wait for stop
-      wait_for: port="{{ port }}" state=stopped
+  handlers:
 
     - name: start tomcat
       command: startup.sh
