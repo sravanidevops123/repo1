@@ -1,15 +1,63 @@
 ---
-- hosts: localhost
+- hosts: all
+  vars:
+    tomcat_home_dir: "/opt/tomcat"
   tasks:
-    - name: Building Docker image
-      local_action: command docker build -t testwebapp:v1 .
-#    - name: Make image as Tar
-#      local_action: command docker save -o testwebapp.tar testwebapp:v1 
-#    - name: Copying Tar file
-#      copy: src="testwebapp.tar" dest="~/"
-#    - name: load image from tar file
-#      command: docker load ~/testwebapp.tar
-    - name: remove Existing Container with old version artifact
-      shell: docker rm -f testwebapp
-    - name: Deploy the container
-      shell: docker run --rm -itd -p 80:8080 --name testwebapp testwebapp:v1
+    - name: Check tomcat exists or not
+      stat:
+        path: {{ tomcat_home_dir }}
+      register: tomcatstatus
+    
+    - name: restart something
+      command: shutdown.sh 
+      args:
+        chdir: "{{ tomcat_home_dir }}/bin"
+      when: tomcatstatus.stat.exists
+      notify:
+      - wait for stop
+      
+    - name: remove old war file
+      command: "rm -rf {{ tomcat_home_dir }}/webapps/TestWeb*" 
+      when: tomcatstatus.stat.exists
+
+    - name: Download tomcat 7
+      get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
+      when: !tomcatstatus.stat.exists
+      notify: 
+      - extract tomcat7
+      - remove file tomcat.tar.gz
+      
+    - name: Copy war file to webapps
+      copy: 
+        src: "TestWebApp/target/*.war"
+        dest: "{{ tomcat_home_dir }}/webapps"
+      notify:
+      - remove logs temp and work
+      - start tomcat
+      - wait for start 
+
+  handlers:
+    - name: extract tomcat7
+      unarchive:
+        src: /opt/apache-tomcat-7.0.32.tar.gz
+        dest: "{{ tomcat_home_dir }}"
+        remote_src: yes
+    
+    - name: remove file tomcat.tar.gz
+      file: path="/opt/apache-tomcat-7.0.32.tar.gz" state="absent"
+    
+    - name: remove logs temp and work
+      command: "rm -rf work/* temp/* logs/*"
+      args:
+        chdir: "{{ tomcat_home_dir }}"
+
+    - name: wait for stop
+      wait_for: port={{ port }} state=stopped
+
+    - name: start tomcat
+      command: startup.sh
+      args:
+        chdir: "{{ tomcat_home_dir }}/bin"
+
+    - name: wait for start
+      wait_for: port={{ port }} state=started
