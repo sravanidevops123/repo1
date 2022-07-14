@@ -52,9 +52,13 @@ stages{
 	
 	 stage("Quality Gate") {
             steps {
+		    withSonarQubeEnv('Sonarqube') {
+			    withCredentials([string(credentialsId: 'My-sonar-token', variable: 'TOKEN')]) {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
-              }
+              		}
+		}
+	      }
             }
           }
 
