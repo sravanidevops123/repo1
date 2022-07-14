@@ -8,7 +8,7 @@
         path: {{ tomcat_home_dir }}
       register: tomcatstatus
     
-    - name: restart something
+    - name: shutting down tomcat
       command: shutdown.sh 
       args:
         chdir: "{{ tomcat_home_dir }}/bin"
@@ -22,7 +22,7 @@
 
     - name: Download tomcat 7
       get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
-      when: !tomcatstatus.stat.exists
+      when: not tomcatstatus.stat.exists
       notify: 
       - extract tomcat7
       - remove file tomcat.tar.gz
