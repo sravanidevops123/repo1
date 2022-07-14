@@ -104,11 +104,13 @@ cat hosts
 */
 	stage("Deploy to Host"){
 		steps{
-			echo "$HOST ansible_user='ec2-user' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
+			//sh "ansible-playbook deploy.yaml"
+			sh '''
+			echo "${HOST} ansible_user='ec2-user' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
 			cat deploy.yaml
 			echo "Deploying into Docker"
-			//sh "ansible-playbook deploy.yaml"
-			sh "ansible-playbook deploy.yaml -i hosts"
+			ansible-playbook deploy.yaml -i hosts
+			'''
 		}
 	}
 }
