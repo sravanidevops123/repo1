@@ -39,11 +39,11 @@ stages{
   	stage("Static Code Analysis"){
 		steps{
 		   withSonarQubeEnv('Sonarqube') {
-			withCredentials([string(credentialsId: 'Sonarqube-creds', variable: 'TOKEN')]) {
+			//withCredentials([string(credentialsId: 'Sonarqube-creds', variable: 'TOKEN')]) {
 			dir('TestWebApp'){
 			echo "Sending Test reports to SonarQube"
-				sh "mvn sonar:sonar -Dsonar.login=${TOKEN}"
-					}
+				sh "mvn sonar:sonar  -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=Admin -X "
+					//}
 				}
 			}
 		}
