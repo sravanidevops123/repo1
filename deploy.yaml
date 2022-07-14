@@ -1,7 +1,5 @@
 ---
 - hosts: all
-  become: true
-  become_user: ec2-user
   vars:
     port: 8080
     tomcat_home_dir: "/opt/apache-tomcat-7.0.32"
@@ -46,13 +44,9 @@
         remote_src: yes
       when: not tomcatstatus.stat.exists
 
-    - name: Creates directory
-      file:
-        path: "{{ tomcat_home_dir }}"
-        state: directory
-        recurse: yes
-        owner: ec2-user
-        group: ec2-user
+    - name: Copy war file to webapps
+      command: "chown -R ec2-user:ec2-user {{ tomcat_home_dir }}"
+      become: yes
 
 
     - name: remove file tomcat.tar.gz
@@ -72,9 +66,7 @@
       - start tomcat
       - wait for start 
     
-#    - name: Copy war file to webapps
-#      command: "chown -R ec2-user:ec2-user {{ tomcat_home_dir }}"
-#      become: yes
+
   handlers:
    - name: start tomcat
      shell: "./{{ tomcat_home_dir }}/bin/startup.sh"
