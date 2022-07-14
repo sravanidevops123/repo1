@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     port: 8080
-    tomcat_home_dir: "/opt/apache-tomcat-7.0.109"
+    tomcat_home_dir: "/opt/apache-tomcat-8.0.15"
   tasks:
     - name: Install openjdk8
       yum: name=java-1.8.0-openjdk state=present
@@ -34,7 +34,7 @@
       
 
     - name: Download tomcat 7
-      get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.109/bin/apache-tomcat-7.0.109.tar.gz" dest="~/"
+      get_url: url="https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.15/bin/apache-tomcat-8.0.15.tar.gz" dest="~/"
       when: not tomcatstatus.stat.exists
 
     - name: Copy war file to webapps
@@ -43,7 +43,7 @@
 
     - name: extract tomcat7
       unarchive:
-        src: "~/apache-tomcat-7.0.109.tar.gz"
+        src: "~/apache-tomcat-8.0.15.tar.gz"
         dest: "/opt/"
         remote_src: yes
       when: not tomcatstatus.stat.exists
@@ -52,7 +52,7 @@
 
 
     - name: remove file tomcat.tar.gz
-      file: path="~/apache-tomcat-7.0.109.tar.gz" state="absent"
+      file: path="~/apache-tomcat-8.0.15.tar.gz" state="absent"
     
     - name: remove logs temp and work
       command: "rm -rf work/* temp/* logs/*"
