@@ -6,7 +6,7 @@ environment{
 }
 	
 //parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
-parameters { string(name: 'Host', defaultValue: "15.207.87.215", description: 'Pass the IP') }	
+parameters { string(name: 'HOST', defaultValue: "15.207.87.215", description: 'Pass the IP') }	
 /*
 tools {
     maven 'maven-3.6.3'
@@ -104,7 +104,7 @@ cat hosts
 */
 	stage("Deploy to Host"){
 		steps{
-			echo "${Host} ansible_user='ec2-user' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
+			echo "$HOST ansible_user='ec2-user' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
 			cat deploy.yaml
 			echo "Deploying into Docker"
 			//sh "ansible-playbook deploy.yaml"
