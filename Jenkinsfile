@@ -6,7 +6,7 @@ environment{
 }
 	
 //parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
-parameters { string(name: 'Host', default: "15.207.87.215", description: 'Pass the IP') }	
+parameters { string(name: 'Host', defaultValue: "15.207.87.215", description: 'Pass the IP') }	
 /*
 tools {
     maven 'maven-3.6.3'
