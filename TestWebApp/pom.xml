@@ -24,29 +24,24 @@
  <repository>
   <id>lti-nexus</id>
   <name>release-nexus</name>
-  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
+  <url>http://35.154.104.221:30983/repository/lti-releases/</url>
  </repository>
 
  <!-- Publish the versioned releases here -->
  <snapshotRepository>
   <id>lti-nexus</id>
   <name>snapshot-nexus</name>
-  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
+  <url>http://35.154.104.221:30983/repository/lti-snaphots/</url>
  </snapshotRepository>
 </distributionManagement>
 
 <!-- download artifacts from this repo -->
 <repositories>
- <repository>
-  <id>lti-pub-nexus</id>
-  <name>vineetmanohar</name>
-  <url>http://65.2.5.222:8081/repository/maven-public/</url>
- </repository>
  
  <repository>
   <id>lti-nexus</id>
   <name>lti</name>
-  <url>http://65.2.5.222:8081/repository/lti-repo/</url>
+  <url>http://35.154.104.221:30983/repository/lti-central/</url>
   <releases>
    <enabled>true</enabled>
   </releases>
@@ -61,8 +56,8 @@
 <pluginRepositories>
  <pluginRepository>
   <id>lti-nexus</id>
-  <name>vineetmanohar</name>
-  <url>http://65.2.5.222:8081/repository/maven-public/</url>
+  <name>mynexus</name>
+  <url>http://35.154.104.221:30983/repository/lti-central/</url>
   <releases>
    <enabled>true</enabled>
   </releases>
@@ -96,7 +91,7 @@
 <properties>
 <!-- Optional URL to server. Default value is http://localhost:9000 -->
 <sonar.host.url>
-http://13.232.250.14:9000
+http://3.110.218.66:31485/
 </sonar.host.url>
 </properties>
 </profile>
