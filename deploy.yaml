@@ -3,7 +3,7 @@
   become: yes
   vars:
     port: 8080
-    tomcat_home_dir: "/opt/tomcat"
+    tomcat_home_dir: "/opt/apache-tomcat-7.0.32"
   tasks:
     - name: Check tomcat exists or not
       stat:
@@ -21,7 +21,7 @@
     - name: shutting down tomcat
       command: shutdown.sh 
       args:
-        chdir: "{{ tomcat_home_dir }}/bin"
+        chdir: "{{ tomcat_home_dir }}/bin/"
       when: tomcatstatus.stat.exists
 
     - name: wait for stop
@@ -33,13 +33,6 @@
       command: "rm -rf {{ tomcat_home_dir }}/webapps/TestWeb*" 
       when: tomcatstatus.stat.exists
       
-    - name: Creates directory
-      file:
-        path: "{{ tomcat_home_dir }}"
-        state: directory
-        recurse: yes
-        owner: ec2-user
-        group: ec2-user
 
     - name: Download tomcat 7
       get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
@@ -48,9 +41,19 @@
     - name: extract tomcat7
       unarchive:
         src: /opt/apache-tomcat-7.0.32.tar.gz
-        dest: "{{ tomcat_home_dir }}"
+        dest: "/opt/"
         remote_src: yes
-    
+      when: not tomcatstatus.stat.exists
+
+    - name: Creates directory
+      file:
+        path: "{{ tomcat_home_dir }}"
+        state: directory
+        recurse: yes
+        owner: ec2-user
+        group: ec2-user
+
+
     - name: remove file tomcat.tar.gz
       file: path="/opt/apache-tomcat-7.0.32.tar.gz" state="absent"
     
