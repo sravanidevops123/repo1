@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: yes
   vars:
     port: 8080
     tomcat_home_dir: "/opt/tomcat"
@@ -9,6 +10,14 @@
         path: "{{ tomcat_home_dir }}"
       register: tomcatstatus
     
+    - name: Debug message
+      debug: msg="Path {{ tomcat_home_dir }} exists and is a directory"
+      when: tomcatstatus.stat.exists
+ 
+    - name: Debug message
+      debug: msg="Path {{ tomcat_home_dir }} does not exists"
+      when: not tomcatstatus.stat.exists
+      
     - name: shutting down tomcat
       command: shutdown.sh 
       args:
