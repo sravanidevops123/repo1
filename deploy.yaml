@@ -1,6 +1,7 @@
 ---
 - hosts: all
-  become: yes
+  become: true
+  become_user: ec2-user
   vars:
     port: 8080
     tomcat_home_dir: "/opt/apache-tomcat-7.0.32"
