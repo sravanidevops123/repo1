@@ -26,10 +26,17 @@
 
     - name: wait for stop
       wait_for: port="{{ port }}" state=stopped
+      when: tomcatstatus.stat.exists
+
 
     - name: remove old war file
       command: "rm -rf {{ tomcat_home_dir }}/webapps/TestWeb*" 
       when: tomcatstatus.stat.exists
+      
+    - name: Creates directory
+      file:
+        path: "{{ tomcat_home_dir }}"
+        state: directory
 
     - name: Download tomcat 7
       get_url: url="https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz" dest="/opt/"
