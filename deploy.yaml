@@ -71,10 +71,12 @@
       - start tomcat
       - wait for start 
 
-  handlers:
+    - name: Copy war file to webapps
+      command: "chown -R ec2-user:ec2-user {{ tomcat_home_dir }}"
 
-    - name: start tomcat
-      command: "{{ tomcat_home_dir }}/bin/startup.sh"
+   handlers:
+   - name: start tomcat
+     command: "{{ tomcat_home_dir }}/bin/startup.sh"
  
-    - name: wait for start
-      wait_for: port="{{ port }}" state=started
+   - name: wait for start
+     wait_for: port="{{ port }}" state=started
