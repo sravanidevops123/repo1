@@ -21,9 +21,7 @@
       when: not tomcatstatus.stat.exists
       
     - name: shutting down tomcat
-      command: shutdown.sh 
-      args:
-        chdir: "{{ tomcat_home_dir }}/bin/"
+      command: "{{ tomcat_home_dir }}/bin/shutdown.sh" 
       when: tomcatstatus.stat.exists
 
     - name: wait for stop
