@@ -49,7 +49,7 @@ stages{
 			}
 		}
 	}
-	
+/*	
 	 stage("Quality Gate") {
             steps {
 	withSonarQubeEnv('Sonarqube') {
@@ -59,7 +59,7 @@ stages{
 	      }
             }
           }
-
+*/
 	stage("Packaging"){
 		steps{
 			dir('TestWebApp'){
