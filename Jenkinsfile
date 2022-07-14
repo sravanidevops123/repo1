@@ -107,7 +107,7 @@ cat hosts
 			//sh "ansible-playbook deploy.yaml"
 			sh '''
 			echo "${HOST} ansible_user='ec2-user' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
-			cat deploy.yaml
+			cat hosts
 			echo "Deploying into Docker"
 			ansible-playbook deploy.yaml -i hosts
 			'''
