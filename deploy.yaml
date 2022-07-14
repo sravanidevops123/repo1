@@ -71,6 +71,6 @@
 
   handlers:
    - name: start tomcat
-     command: "sh {{ tomcat_home_dir }}/bin/catalina.sh run"
+     command: "sh {{ tomcat_home_dir }}/bin/catalina.sh start"
    - name: wait for start
      wait_for: port="{{ port }}" state=started
