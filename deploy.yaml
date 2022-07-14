@@ -5,6 +5,8 @@
     port: 8080
     tomcat_home_dir: "/opt/apache-tomcat-7.0.32"
   tasks:
+    - name: Install openjdk8
+      yum: name=java-1.8.0-openjdk state=present
     - name: Check tomcat exists or not
       stat:
         path: "{{ tomcat_home_dir }}"
