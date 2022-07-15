@@ -129,6 +129,7 @@ cat hosts
 				./kubectl get svc
 				"""
 				//sh "ansible-playbook deploy.yaml -i hosts"
+			}
 		}
 	}
 }
