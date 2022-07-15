@@ -103,9 +103,32 @@ cat hosts
 */
 	stage("Deploy to Host"){
 		steps{
-			echo "Deploying into Docker"
-			//sh "ansible-playbook deploy.yaml"
-			sh "ansible-playbook deploy.yaml -i hosts"
+			withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'access_key', passwordVariable: 'secret_key')]) {
+				sh """
+				sudo yum install awscli -y
+				aws --version
+				aws configure set aws_access_key_id ${access_key}
+				aws configure set aws_secret_access_key ${secret_key}
+				aws configure set default.region ap-south-1
+				
+				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+				chmod +x ./kubectl
+				
+				aws eks describe-cluster --name gvkrsoltuions --query cluster.status
+				aws eks update-kubeconfig --name gvkrsoltuions
+				./kubectl cluster-info
+				
+				echo "Building Docker Image"
+				docker build -t testwebapp:v1 .
+				
+				echo "Deploying into k8s"
+				./kubectl.exe run test --image=testwebapp:v1 --port=8080
+				./kubectl expose pod test --port=8000 --target-port=8080 --type=NodePort
+				
+				./kubectl get pods
+				./kubectl get svc
+				"""
+				//sh "ansible-playbook deploy.yaml -i hosts"
 		}
 	}
 }
