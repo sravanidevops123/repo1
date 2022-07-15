@@ -119,8 +119,9 @@ cat hosts
 				./kubectl cluster-info
 				
 				echo "Building Docker Image"
-				docker build -t http://35.154.104.221:30983/testwebapp:v1 .
+				docker build -t testwebapp:v1 .
 				docker login http://35.154.104.221:30983/ -u admin -p admin
+				docker tag testwebapp:v1 http://35.154.104.221:30983/testwebapp:v1
 				docker push http://35.154.104.221:30983/testwebapp:v1
 				
 				./kubectl delete pod/test || true
