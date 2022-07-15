@@ -119,12 +119,14 @@ cat hosts
 				./kubectl cluster-info
 				
 				echo "Building Docker Image"
-				docker build -t testwebapp:v1 .
+				docker build -t http://35.154.104.221:30983/testwebapp:v1 .
+				docker login http://35.154.104.221:30983/ -u admin -p admin
+				docker push http://35.154.104.221:30983/testwebapp:v1
 				
 				./kubectl delete pod/test || true
 				
 				echo "Deploying into k8s"
-				./kubectl run test --image=testwebapp:v1 --port=8080
+				./kubectl run test --image=http://35.154.104.221:30983/testwebapp:v1 --port=8080
 				./kubectl expose pod test --port=9090 --target-port=8080 --type=NodePort || true
 				
 				./kubectl get pods
