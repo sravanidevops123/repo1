@@ -122,7 +122,7 @@ cat hosts
 				docker build -t testwebapp:v1 .
 				
 				echo "Deploying into k8s"
-				./kubectl.exe run test --image=testwebapp:v1 --port=8080
+				./kubectl run test --image=testwebapp:v1 --port=8080
 				./kubectl expose pod test --port=8000 --target-port=8080 --type=NodePort
 				
 				./kubectl get pods
