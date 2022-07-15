@@ -121,7 +121,7 @@ cat hosts
 				echo "Building Docker Image"
 				docker build -t testwebapp:v1 .
 				
-				kubectl delete pod/test
+				./kubectl delete pod/test
 				
 				echo "Deploying into k8s"
 				./kubectl run test --image=testwebapp:v1 --port=8080
