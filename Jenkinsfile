@@ -101,7 +101,7 @@ cat hosts
 		}
 	}
 */
-	stage("Deploy to Host"){
+	stage("Deploy to EKS"){
 		steps{
 			withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'access_key', passwordVariable: 'secret_key')]) {
 				sh """
@@ -121,11 +121,14 @@ cat hosts
 				echo "Building Docker Image"
 				docker build -t testwebapp:v1 .
 				
+				kubectl delete pod/test
+				
 				echo "Deploying into k8s"
 				./kubectl run test --image=testwebapp:v1 --port=8080
-				./kubectl expose pod test --port=9090 --target-port=8080 --type=NodePort
+				./kubectl expose pod test --port=9090 --target-port=8080 --type=NodePort || true
 				
 				./kubectl get pods
+				./kubectl get pods -o wide
 				./kubectl get svc
 				"""
 				//sh "ansible-playbook deploy.yaml -i hosts"
