@@ -128,11 +128,12 @@ cat hosts
 				
 				echo "Deploying into k8s"
 				./kubectl run test --image=gvkr1409/testwebapp:v1 --port=8080
-				./kubectl expose pod test --port=9090 --target-port=8080 --type=NodePort || true
+				./kubectl expose pod my-test --port=9090 --target-port=8080 --type=NodePort || true
 				
 				./kubectl get pods
 				./kubectl get pods -o wide
 				./kubectl get svc
+				./kubectl get nodes -o wide
 				"""
 				//sh "ansible-playbook deploy.yaml -i hosts"
 			}
