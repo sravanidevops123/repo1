@@ -1,16 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: underwater-app-jenkins 
+  name: test-eks-jenkins 
   labels:
     app: testwebapp
 spec:
   selector:
     matchLabels:
         app: testwebapp
-  replicas: 3
-  strategy:
-    type: RollingUpdate
+  replicas: 2
   template:
     metadata:
       labels:
