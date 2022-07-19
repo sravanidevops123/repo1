@@ -112,7 +112,7 @@ cat hosts
 	stage('Push Docker Image') {
             steps {
                 script{
-                    docker.withRegistry('https://index.docker.io/', 'dockerhub-creds') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("latest")
                     }
