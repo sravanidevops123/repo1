@@ -18,6 +18,8 @@ spec:
               image: gvkr1409/testwebapp
               ports:
               - containerPort: 8080
+            imagePullSecrets:
+            - name: $docker-creds
 
 ---
 apiVersion: v1
