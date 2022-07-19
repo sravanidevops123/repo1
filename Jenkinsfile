@@ -3,8 +3,9 @@ agent any
 
 environment{
 	MAVEN_OPTS="-Xmx512m"
-        AWS_ACCESS_KEY_ID     = credentials('aws-credentials-aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-credentials-aws-secret-access-key')
+	AWS_CREDS = credentials('aws-credentials')
+	AWS_ACCESS_KEY_ID     = ${AWS_CREDS_USR} 
+        AWS_SECRET_ACCESS_KEY = ${AWS_CREDS_PSW}
 }
 /*	
 parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
