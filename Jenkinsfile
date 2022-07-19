@@ -122,8 +122,8 @@ cat hosts
 	stage("Deploy to EKS"){
 		steps{
 			kubernetesDeploy(
-				configs: 'deployment.yaml'
-				kubeconfigid: 'K8S-config'
+				configs: 'deployment.yaml',
+				kubeconfigid: 'K8S-config',
 				enableConfigSubstitution: true
 			)
 /*				sh """
