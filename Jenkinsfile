@@ -25,7 +25,7 @@ stages{
 	stage("Compile"){
 		steps{
 			dir('TestWebApp'){
-			echo "Compiling"
+				echo "Compiling ${AWS_ACCESS_KEY_ID}"
 			sh "mvn compile"
 			}
 		}
