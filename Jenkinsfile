@@ -123,7 +123,7 @@ cat hosts
 		steps{
 			kubernetesDeploy(
 				configs: 'deployment.yaml',
-				kubeconfigid: 'K8S-config',
+				kubeconfigId: 'K8S-config',
 				enableConfigSubstitution: true
 			)
 /*				sh """
