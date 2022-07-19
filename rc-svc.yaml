@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    name: my-nginx-rc
+spec:
+    replicas: 3   #Desired number of pods will be created
+    selector:	#it determines what pods are in ReplicationController's scope
+        appName: fe
+    template:  #A Pod Template will be used when creating new pod replicas
+        metadata:  #Details about template and its labels
+            name: my-nginx
+            labels:
+                appName: fe
+        spec:
+            containers:
+            - name: nginx
+              image: nginx:stable
+              ports:
+              - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: my-svc-test
+spec:
+    selector:
+        appName: fe
+    type: NodePort
+    ports:
+    - port: 8009  #port opened in cluster and accessed internally
+      targetPort: 80 #port running inside container
