@@ -101,34 +101,34 @@ cat hosts
 		}
 	}
 */
+	stage('Build Docker Image') { 
+            steps { 
+                script{
+                 app = docker.build("testwebapp")
+                }
+            }
+        }
+	
+	stage('Push Docker Image') {
+            steps {
+                script{
+                    docker.withRegistry('https://index.docker.io/', 'dockerhub-creds') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                    }
+                }
+            }
+        }
 	stage("Deploy to EKS"){
 		steps{
 			withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'access_key', passwordVariable: 'secret_key')]) {
 				sh """
-				sudo yum install awscli -y
-				aws --version
-				aws configure set aws_access_key_id ${access_key}
-				aws configure set aws_secret_access_key ${secret_key}
-				aws configure set default.region ap-south-1
 				
 				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
 				chmod +x ./kubectl
 				
-				aws eks describe-cluster --name gvkrsoltuions --query cluster.status
-				aws eks update-kubeconfig --name gvkrsoltuions
 				./kubectl cluster-info
 				
-				echo "Building Docker Image"
-				docker build -t testwebapp:v1 .
-				docker login -u ${DOCKER_USR} -p ${DOCKER_PWD}
-				docker tag testwebapp:v1 gvkr1409/testwebapp:v1
-				docker push gvkr1409/testwebapp:v1
-				
-				./kubectl delete pod/test || true
-				
-				echo "Deploying into k8s"
-				./kubectl run test --image=gvkr1409/testwebapp:v1 --port=8080
-				./kubectl expose pod my-test --port=9090 --target-port=8080 --type=NodePort || true
 				
 				./kubectl get pods
 				./kubectl get pods -o wide
