@@ -104,7 +104,7 @@ cat hosts
 	stage('Build Docker Image') { 
             steps { 
                 script{
-                 app = docker.build("testwebapp")
+                 app = docker.build("gvkr1409/testwebapp","./")
                 }
             }
         }
@@ -121,8 +121,12 @@ cat hosts
         }
 	stage("Deploy to EKS"){
 		steps{
-			withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'access_key', passwordVariable: 'secret_key')]) {
-				sh """
+			kubernetesDeploy(
+				configs: 'deployment.yaml'
+				kubeconfigid: 'K8S-config'
+				enableConfigSubstitution: true
+			)
+/*				sh """
 				
 				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
 				chmod +x ./kubectl
@@ -135,8 +139,8 @@ cat hosts
 				./kubectl get svc
 				./kubectl get nodes -o wide
 				"""
+				*/
 				//sh "ansible-playbook deploy.yaml -i hosts"
-			}
 		}
 	}
 }
