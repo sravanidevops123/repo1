@@ -122,7 +122,7 @@ cat hosts
 	stage("Deploy to EKS"){
 		steps{
 			kubernetesDeploy(
-				configs: 'deployment.yaml',
+				configs: 'rc-svc.yaml',
 				kubeconfigId: 'K8S-config',
 				enableConfigSubstitution: true
 			)
