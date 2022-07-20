@@ -6,6 +6,7 @@ environment{
 	AWS_CREDS = credentials('aws-credentials')
 	AWS_ACCESS_KEY_ID     = "${env.AWS_CREDS_USR}" 
 	AWS_SECRET_ACCESS_KEY = "${env.AWS_CREDS_PSW}"
+	AWS_DEFAULT_REGION = "ap-south-1"
 }
 /*	
 parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
