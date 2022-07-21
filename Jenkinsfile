@@ -125,7 +125,7 @@ cat hosts
         }
 	stage("install kubectl"){
 		steps{
-			sh """
+			sh '''
 				
 				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
 				chmod +x ./kubectl
@@ -198,8 +198,7 @@ export KUBECONFIG=$KUBECONFIG:~/.kube/config
 echo 'export KUBECONFIG=$KUBECONFIG:~/.kube/config' >> ~/.bashrc
 
 				
-				
-				"""
+'''
 		}
 	}
 	stage("Deploy to EKS"){
