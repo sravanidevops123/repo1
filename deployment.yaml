@@ -23,3 +23,15 @@ spec:
           imagePullPolicy: Always
       imagePullSecrets:
         - name: $docker-creds
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: my-svc-test
+spec:
+    selector:
+        appName: testwebapp
+    type: NodePort
+    ports:
+    - port: 8010
+      targetPort: 8080
