@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: test-eks-jenkins 
   labels:
-    app: testwebapp
+    appName: testwebapp
 spec:
   selector:
     matchLabels:
-        app: testwebapp
+        appName: testwebapp
   replicas: 2
   template:
     metadata:
       labels:
-        app: testwebapp
+        appName: testwebapp
     spec:
       containers:
         - name: testwebapp
@@ -33,5 +33,5 @@ spec:
         appName: testwebapp
     type: NodePort
     ports:
-    - port: 8010
+    - port: 8089
       targetPort: 8080
