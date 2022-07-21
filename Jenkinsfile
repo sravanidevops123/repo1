@@ -128,15 +128,15 @@ cat hosts
 			sh '''
 				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
 				chmod +x ./kubectl
-				#./kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
 				aws eks update-kubeconfig --name gvkrsoltuions
-				cp -r ~/.kube ./
-				./kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins || true
+				./kubectl cluster-info
+				#./kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
 			'''
 		}
 	}
 	stage("Deploy to EKS"){
 		steps{
+/*
 			kubernetesDeploy(
 				configs: 'deployment.yaml',
 				kubeConfig: [path: '.kube/config'],
@@ -145,23 +145,17 @@ cat hosts
 				secretName: 'docker-creds'
 				//enableConfigSubstitution: true
 			)
-/*				sh """
-				
-				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
-				chmod +x ./kubectl
-				
-				kubectl.exe create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
-				
-				./kubectl cluster-info
-				
-				
+*/
+				sh """
+
+				./kubectl delete -f deployment.yaml --v 6|| true
+				./kubectl apply -f deployment.yaml --v 6|| true
+
 				./kubectl get pods
 				./kubectl get pods -o wide
 				./kubectl get svc
 				./kubectl get nodes -o wide
 				"""
-				*/
-				//sh "ansible-playbook deploy.yaml -i hosts"
 		}
 	}
 }
