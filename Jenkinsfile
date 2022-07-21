@@ -128,9 +128,10 @@ cat hosts
 			sh '''
 				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
 				chmod +x ./kubectl
-				# ./kubectl.exe create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
+				./kubectl.exe create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
 				aws eks update-kubeconfig --name gvkrsoltuions
 				cp -r ~/.kube ./
+				./kubectl.exe create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
 			'''
 		}
 	}
