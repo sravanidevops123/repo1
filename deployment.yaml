@@ -21,3 +21,5 @@ spec:
             - containerPort: 8080
               protocol: TCP
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: $docker-creds
