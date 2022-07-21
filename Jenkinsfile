@@ -141,7 +141,7 @@ cat hosts
 				configs: 'rc-svc.yaml',
 				kubeconfigId: 'K8S-config',
 				dockerCredentials: [[credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']],
-				secretName: 'docker-creds',
+				//secretName: 'docker-creds',
 				enableConfigSubstitution: true
 			)
 /*				sh """
