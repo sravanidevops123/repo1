@@ -130,7 +130,7 @@ cat hosts
 				chmod +x ./kubectl
 				# ./kubectl.exe create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
 				aws eks update-kubeconfig --name gvkrsoltuions
-				export KUBECONFIG=$KUBECONFIG:~/.kube/config
+				export KUBECONFIG=~/.kube/config
 			'''
 		}
 	}
