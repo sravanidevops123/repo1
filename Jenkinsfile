@@ -156,7 +156,7 @@ mkdir -p ~/.kube || true
 
 
 
-cat <EOF> ~/.kube/config
+cat <<EOF> ~/.kube/config
 apiVersion: v1
 clusters:
 - cluster:
