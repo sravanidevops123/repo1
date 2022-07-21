@@ -138,7 +138,7 @@ cat hosts
 		steps{
 			kubernetesDeploy(
 				configs: 'deployment.yaml',
-				kubeConfig: [path: '~/.kube/config'],
+				kubeConfig: [path: '.kube/config'],
 				//kubeconfigId: 'config',
 				//dockerCredentials: [[credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']],
 				secretName: 'docker-creds'
