@@ -22,7 +22,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
       imagePullSecrets:
-        - name: $docker-creds
+        - name: docker-creds
 ---
 apiVersion: v1
 kind: Service
