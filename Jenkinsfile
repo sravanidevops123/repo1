@@ -156,8 +156,7 @@ mkdir -p ~/.kube || true
 
 
 
-#!/bin/bash
-read -r -d '' KUBECONFIG <<EOF
+cat <EOF> ~/.kube/config
 apiVersion: v1
 clusters:
 - cluster:
