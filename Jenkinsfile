@@ -84,8 +84,14 @@ stages{
 		steps{
 		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'privateKey')]) {
 	   		sh '''
-			cat $privateKey > myLap.pem
-			chmod 400 myLap.pem || true
+if [ -f "myLap.pem" ]
+then
+echo "File found"
+else
+cat $privateKey > myLap.pem
+chmod 400 myLap.pem || true
+fi
+			
 			'''
 			}
 		}
