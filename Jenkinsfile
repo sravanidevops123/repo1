@@ -84,7 +84,7 @@ stages{
 		steps{
 		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'my-private-key')]) {
 	   		sh """
-			cp \$my-private-key ./myLap.pem
+			cp ${my-private-key} ./myLap.pem
 			chmod 400 ./myLap.pem
 			"""
 			}
