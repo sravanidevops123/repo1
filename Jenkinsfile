@@ -82,9 +82,9 @@ stages{
 	
 	stage("Copying Private Key"){
 		steps{
-		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'private-key')]) {
+		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'privateKey')]) {
 	   		sh '''
-			cp $private-key ./myLap.pem
+			cp $privateKey ./myLap.pem
 			chmod 400 ./myLap.pem
 			'''
 			}
