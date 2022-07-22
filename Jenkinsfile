@@ -1,6 +1,10 @@
 pipeline{
 agent any
 
+options {
+        ansiColor('xterm')
+}
+	
 environment{
 	MAVEN_OPTS="-Xmx512m"
 	AWS_CREDS = credentials('aws-credentials')
