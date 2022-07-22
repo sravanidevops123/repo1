@@ -8,13 +8,16 @@ environment{
 	AWS_SECRET_ACCESS_KEY = "${env.AWS_CREDS_PSW}"
 	AWS_DEFAULT_REGION = "ap-south-1"
 }
-/*	
+tools {
+    	maven 'maven-3.6.3'
+	jdk 'JDK8u221'
+	terraform 'terraform-0.14.5'
+    }
+	
+	/*	
 parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
 
-tools {
-    maven 'maven-3.6.3'
-		jdk 'JDK8u221'
-    }
+
 
 	
 	
