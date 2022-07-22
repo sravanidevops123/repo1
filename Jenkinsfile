@@ -101,7 +101,7 @@ fi
 		}
 	}
 	
-	stage("Deploy using Terraform"){
+	stage("Terraform Plan"){
 		steps{
 			sh '''	
 				alias tf="terraform"
@@ -110,6 +110,22 @@ fi
 				tf destroy -auto-approve || true
 				tf apply -auto-approve || true
 			'''
+		}
+	}
+	stage("Deploy using Terraform"){
+		input {
+        	        message "Should we continue?"
+               		ok "Yes, we should."
+                	submitter "alice,bob"
+                	parameters {
+                	    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                	}
+            	}
+		steps{
+			sh """
+				tf destroy -auto-approve || true
+				tf apply -auto-approve || true
+			"""
 		}
 	}
 }
