@@ -29,7 +29,7 @@ resource "aws_instance" "web" {
   
   provisioner "file" {
     source      = "TestWebApp/target/TestWebApp.war"
-    destination = "/opt/TestWebApp.war"
+    destination = "~/TestWebApp.war"
   }
   
   connection {
