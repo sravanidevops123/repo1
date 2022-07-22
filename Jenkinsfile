@@ -103,8 +103,6 @@ fi
 				alias tf="terraform"
 				tf init
 				tf plan
-				tf destroy -auto-approve || true
-				tf apply -auto-approve || true
 			'''
 		}
 	}
@@ -118,6 +116,7 @@ fi
             	}
 		steps{
 			sh """
+				alias tf="terraform"
 				tf destroy -auto-approve || true
 				tf apply -auto-approve || true
 			"""
