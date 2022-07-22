@@ -1,9 +1,5 @@
 pipeline{
 agent any
-
-options {
-        ansiColor('xterm')
-}
 	
 environment{
 	MAVEN_OPTS="-Xmx512m"
