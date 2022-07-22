@@ -82,11 +82,11 @@ stages{
 	
 	stage("Copying Private Key"){
 		steps{
-		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'my-private-key')]) {
-	   		sh """
-			cp ${my-private-key} ./myLap.pem
+		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'private-key')]) {
+	   		sh '''
+			cp $private-key ./myLap.pem
 			chmod 400 ./myLap.pem
-			"""
+			'''
 			}
 		}
 	}
@@ -100,30 +100,6 @@ stages{
 				tf destroy -auto-approve || true
 				tf apply -auto-approve || true
 			'''
-		}
-	}
-	stage("Deploy to EKS"){
-		steps{
-/*
-			kubernetesDeploy(
-				configs: 'deployment.yaml',
-				kubeConfig: [path: '.kube/config'],
-				//kubeconfigId: 'config',
-				//dockerCredentials: [[credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']],
-				secretName: 'docker-creds'
-				//enableConfigSubstitution: true
-			)
-*/
-				sh """
-
-				./kubectl delete -f deployment.yaml --v 6|| true
-				./kubectl apply -f deployment.yaml --v 6|| true
-
-				./kubectl get pods
-				./kubectl get pods -o wide
-				./kubectl get svc
-				./kubectl get nodes -o wide
-				"""
 		}
 	}
 }
