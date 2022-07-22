@@ -27,7 +27,7 @@ stages{
 		steps{
 			dir('TestWebApp'){
 				echo "Compiling ${AWS_ACCESS_KEY_ID}"
-			sh "mvn compile"
+				sh "mvn compile"
 			}
 		}
 	}
@@ -79,58 +79,26 @@ stages{
 		}
 	}
   }
-/*
-	stage("Hosts File"){
-		when { equals expected: 'qa', actual: "${ENV}" }
+	
+	stage("Copying Private Key"){
 		steps{
-sh '''
-#if [["${ENV}" == qa]]
-#then
-echo "13.208.241.61 ansible_user='sravs' ansible_password='Devops@123' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
-
-#elif [["${ENV}" == perf]]
-#then
-#echo "15.152.33.17 ansible_user='sravs' ansible_password='Devops@123' ansible_ssh_common_args='-o StrictHostKeyChecking=no'"> hosts
-
-#elif [["${ENV}" == uat]]
-#then
-#echo "localhost ansible_user='sravs' ansible_password='Devops@123' ansible_ssh_common_args='-o StrictHostKeyChecking=no'" > hosts
-#else
-#echo "entered wrong parameter"
-#echo ""> hosts
-#fi
-
-cat hosts
-'''
+		withCredentials([file(credentialsId: 'myLap-pemkey', variable: 'my-private-key')]) {
+	   		sh """
+			cp \$my-private-key ./myLap.pem
+			chmod 400 ./myLap.pem
+			"""
+			}
 		}
 	}
-*/
-	stage('Build Docker Image') { 
-            steps { 
-                script{
-                 app = docker.build("gvkr1409/testwebapp","./")
-                }
-            }
-        }
 	
-	stage('Push Docker Image') {
-            steps {
-                script{
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
-                    }
-                }
-            }
-        }
-	stage("install kubectl"){
+	stage("Deploy using Terraform"){
 		steps{
-			sh '''
-				curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
-				chmod +x ./kubectl
-				aws eks update-kubeconfig --name gvkrsoltuions
-				./kubectl cluster-info
-				#./kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:jenkins
+			sh '''	
+				alias tf="terraform"
+				tf init
+				tf plan
+				tf destroy -auto-approve || true
+				tf apply -auto-approve || true
 			'''
 		}
 	}
