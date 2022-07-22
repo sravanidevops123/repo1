@@ -36,7 +36,7 @@ resource "aws_instance" "web" {
     type     = "ssh"
     user     = "ec2-user"
     #password = var.root_password
-    private_key = file('myLap.pem')
+    private_key = file("myLap.pem")
     host     = self.public_ip
   }
   
