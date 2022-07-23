@@ -1,5 +1,5 @@
 #!/bin/bash
 cp ~/TestWebApp.war /opt/tomcat8.5.41/webapps
-sh /opt/tomcat8.5.41/bin/startup.sh &
+nohup sh /opt/tomcat8.5.41/bin/startup.sh
 
 ps -ef | grep java
