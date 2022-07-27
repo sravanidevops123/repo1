@@ -8,25 +8,15 @@ environment{
 	AWS_SECRET_ACCESS_KEY = "${env.AWS_CREDS_PSW}"
 	AWS_DEFAULT_REGION = "ap-south-1"
 }
+
 tools {
     	maven 'maven-3.6.3'
 	jdk 'JDK8u221'
 	terraform 'terraform-0.14.5'
     }
 	
-	/*	
-parameters { choice(name: 'ENV', choices: ['qa', 'perf', 'uat'], description: 'Select the environment to deploy') }	
-
-
-
-	
-	
-triggers {
-  GenericTrigger(causeString: 'Generic Cause because of new Commit appeared', regexpFilterExpression: '', regexpFilterText: '', token: '1212', tokenCredentialId: '')
-}
-*/
 stages{
-	stage("Compile"){
+	stage("Compiling"){
 		steps{
 			dir('TestWebApp'){
 				echo "Compiling ${AWS_ACCESS_KEY_ID}"
@@ -89,8 +79,10 @@ stages{
 	   		sh '''
 if [ -f "myLap.pem" ]
 then
-echo "File found"
+echo "Specified file found in current Working Directory"
 else
+echo "Specified file not found in current Working Directory"
+echo "Loading the private key"
 cat $privateKey > myLap.pem
 chmod 400 myLap.pem || true
 fi
@@ -100,28 +92,26 @@ fi
 		}
 	}
 	
-	stage("Terraform Plan"){
+	stage("Terraform Init & Plan"){
 		steps{
 			sh '''	
-				alias tf="terraform"
-				tf init
-				tf plan
+				terraform init
+				terraform plan
 			'''
 		}
 	}
-	stage("Deploy using Terraform"){
+	stage("Provision & Deploy"){
 		input {
         	        message "Should we continue?"
                		ok "Yes, we should."
                 	parameters {
-                	    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                	    string(name: 'PERSON', defaultValue: '${env.BUILD_USER}', description: 'Give the Person Name')
                 	}
             	}
 		steps{
 			sh """
-				alias tf="terraform"
-				tf destroy -auto-approve || true
-				tf apply -auto-approve || true
+				terraform destroy -auto-approve || true
+				terraform apply -auto-approve || true
 			"""
 		}
 	}
