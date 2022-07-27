@@ -1,20 +1,3 @@
-provider "aws" {
-
-}
-
-
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_security_group" "default" {
-  name   = "launch-wizard-4"
-  vpc_id = data.aws_vpc.default.id
-}
-
-
-
-
 resource "aws_instance" "web" {
   ami               = var.ami_id
   instance_type     = var.instance_type
@@ -66,32 +49,4 @@ resource "aws_volume_attachment" "ebs_att" {
   device_name = "/dev/sdh"
   volume_id   = aws_ebs_volume.example.id
   instance_id = aws_instance.web.id
-}
-
-
-
-output "my_publi_ip" {
-  value = aws_instance.web.public_ip
-}
-output "my_publi_dns" {
-  value = aws_instance.web.public_dns
-}
-
-
-
-variable "ami_id" {
-  default = "ami-08df646e18b182346"
-}
-
-variable "instance_type" {
-  default = "t2.micro"
-}
-
-
-variable "key_name" {
-  default="myLap"
-}
-
-variable "vpc_id" {
-  default = "vpc-71d6021a"
 }
