@@ -6,29 +6,13 @@ resource "aws_instance" "web" {
   security_groups   = [data.aws_security_group.default.name]
 
   provisioner "local-exec" {
-    when    = destroy
-    command = "echo 'Destroy-time provisioner'"
-  }
-  
-  provisioner "file" {
-    source      = "TestWebApp/target/TestWebApp.war"
-    destination = "~/TestWebApp.war"
-  }
-  
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    #password = var.root_password
-    private_key = file("myLap.pem")
-    host     = self.public_ip
-  }
-  
-  provisioner "remote-exec" {
-    script="downloadjdk8Tomcat.sh"
-  }
-  
-  provisioner "remote-exec" {
-    script="deployAndStartTomcat.sh"
+    #when    = destroy
+    command = <<EOT
+	  echo "${self.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=${var.key_name}.pem" > hosts;
+    export ANSIBLE_HOST_KEY_CHECKING=False;
+    cat hosts
+	  ansible-playbook -i hosts jdk8_tomcat_deploy.yml
+    EOT
   }
     
   tags = {
@@ -36,6 +20,7 @@ resource "aws_instance" "web" {
   }
 }
 
+/*
 resource "aws_ebs_volume" "example" {
   availability_zone = "ap-south-1a"
   size              = 10
@@ -50,3 +35,4 @@ resource "aws_volume_attachment" "ebs_att" {
   volume_id   = aws_ebs_volume.example.id
   instance_id = aws_instance.web.id
 }
+*/
