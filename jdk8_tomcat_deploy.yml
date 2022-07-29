@@ -1,13 +1,13 @@
 ---
 - hosts: all
   become_user: ec2-user
-  become: yes
   vars:
     port: 8080
     tomcat_home_dir: "/opt/apache-tomcat-8.0.23"
   tasks:
     - name: Install openjdk8
       yum: name=java-1.8.0-openjdk state=present
+      become: true
     - name: Check tomcat exists or not
       stat:
         path: "{{ tomcat_home_dir }}"
