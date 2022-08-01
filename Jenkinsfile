@@ -110,9 +110,39 @@ fi
             	}
 		steps{
 			sh """
-				terraform taint null_resource.script || true
-				terraform taint aws_instance.web || true
-				terraform apply -auto-approve || true
+terraform output -json my_instance_id | jq -r '.[0]' > old_instance_data
+
+terraform state rm aws_instance.web
+
+terraform plan -destroy 
+
+terraform destroy -auto-approve || true
+
+terraform plan
+
+terraform apply -auto-approve || true
+
+sleep 120s
+
+terraform output -json my_publi_dns | jq -r '.[0]' > new_instance_data
+
+new_url=`head -1 new_instance_data`
+
+status_code=$(curl --write-out %{http_code} --silent --output /dev/null $new_url)
+
+if [[ "$status_code" -ne 200 ]] ; then
+  terraform destroy
+  old_instance_id=`head -1 old_instance_data`
+  terraform import aws_instance.web $old_instance_id
+  echo "Latest version of Application not deployed successfully"
+  exit 0
+else
+  echo "Application deployed successfully and the status code is $status_code"
+  
+  exit 0
+#  echo "Site status changed to $status_code" | mail -s "SITE STATUS CHECKER" "my_email@email.com" -r "STATUS_CHECKER"
+
+fi
 			"""
 		}
 	}
