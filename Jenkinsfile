@@ -141,6 +141,7 @@ else
   echo "Application deployed successfully and the status code is $status_code"
   
   cd old_data
+  cp ../variables.tf ../output.tf .
   terraform init
   old_instance_id=`head -1 old_instance_data`
   terraform import aws_instance.web $old_instance_id
