@@ -110,8 +110,8 @@ fi
             	}
 		steps{
 			sh """
-				terraform taint null_resource.script
-				terraform taint aws_instance.web
+				terraform taint null_resource.script || true
+				terraform taint aws_instance.web || true
 				terraform apply -auto-approve || true
 			"""
 		}
