@@ -110,7 +110,8 @@ fi
             	}
 		steps{
 			sh """
-				terraform destroy -auto-approve || true
+				terraform taint null_resource.script
+				terraform taint aws_instance.web
 				terraform apply -auto-approve || true
 			"""
 		}
