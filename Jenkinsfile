@@ -132,7 +132,7 @@ new_url=`head -1 new_instance_data`
 #status_code=$(curl --write-out %{http_code} --silent --output /dev/null $new_url:8080/TestWebApp)
 status_code=$(curl -Is $new_url:8080/TestWebApp/ | head -1 | awk '{print $2}')
 if [[ $status_code -ne 200 ]] ; then
-  terraform destroy
+  terraform destroy -auto-approve
   old_instance_id=`head -1 old_instance_data`
   terraform import aws_instance.web $old_instance_id
   echo "Latest version of Application not deployed successfully so restoring it to old version"
