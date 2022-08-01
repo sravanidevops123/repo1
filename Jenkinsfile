@@ -109,7 +109,7 @@ fi
                 	}
             	}
 		steps{
-			sh """
+			sh '''
 terraform output -json my_instance_id | jq -r '.[0]' > old_instance_data
 
 terraform state rm aws_instance.web
@@ -149,7 +149,7 @@ else
 #  echo "Site status changed to $status_code" | mail -s "SITE STATUS CHECKER" "my_email@email.com" -r "STATUS_CHECKER"
 
 fi
-			"""
+			'''
 		}
 	}
 }
