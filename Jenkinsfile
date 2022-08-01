@@ -134,11 +134,17 @@ if [[ "$status_code" -ne 200 ]] ; then
   terraform destroy
   old_instance_id=`head -1 old_instance_data`
   terraform import aws_instance.web $old_instance_id
-  echo "Latest version of Application not deployed successfully"
+  echo "Latest version of Application not deployed successfully so restoring it to old version"
   exit 0
 else
   echo "Application deployed successfully and the status code is $status_code"
   
+  cd old_data
+  terraform init
+  old_instance_id=`head -1 old_instance_data`
+  terraform import aws_instance.web $old_instance_id
+  echo "Destroying old Version deployed Servers"
+  terraform destroy -auto-approve || true
   exit 0
 #  echo "Site status changed to $status_code" | mail -s "SITE STATUS CHECKER" "my_email@email.com" -r "STATUS_CHECKER"
 
