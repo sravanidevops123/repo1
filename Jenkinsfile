@@ -129,8 +129,8 @@ terraform output -json my_publi_dns | jq -r . | head -1 > new_instance_data
 
 new_url=`head -1 new_instance_data`
 
-status_code=$(curl --write-out %{http_code} --silent --output /dev/null $new_url:8080/TestWebApp)
-
+#status_code=$(curl --write-out %{http_code} --silent --output /dev/null $new_url:8080/TestWebApp)
+status_code=$(curl -Is $new_url:8080/TestWebApp/ | head -1 | awk '{print $2}')
 if [[ $status_code -ne 200 ]] ; then
   terraform destroy
   old_instance_id=`head -1 old_instance_data`
