@@ -111,7 +111,7 @@ fi
 		steps{
 			sh '''
 			sudo yum install jq -y
-terraform output -json my_instance_id | jq -r . > old_instance_data
+terraform output -json my_instance_id | jq -r . > old_data/old_instance_data
 
 terraform state rm aws_instance.web
 
