@@ -9,30 +9,27 @@ resource "aws_instance" "web" {
     #when    = destroy
     command = <<EOT
 	  echo "${self.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=${var.key_name}.pem" > hosts;
-    export ANSIBLE_HOST_KEY_CHECKING=False;
-    cat hosts
-	  ansible-playbook -i hosts jdk8_tomcat_deploy.yml
     EOT
   }
+lifecycle{
+	create_before_destroy=true
+}
     
   tags = {
     Name = "Tommy"
   }
 }
 
-/*
-resource "aws_ebs_volume" "example" {
-  availability_zone = "ap-south-1a"
-  size              = 10
 
-  tags = {
-    Name = "HelloWorld"
+resource "null_resource" "script"{
+  provisioner "local-exec" {
+    #when    = destroy
+    command = <<EOT
+    export ANSIBLE_HOST_KEY_CHECKING=False;
+    cat hosts
+	  ansible-playbook -i hosts jdk8_tomcat_deploy.yml
+    EOT
   }
 }
 
-resource "aws_volume_attachment" "ebs_att" {
-  device_name = "/dev/sdh"
-  volume_id   = aws_ebs_volume.example.id
-  instance_id = aws_instance.web.id
-}
-*/
+
