@@ -20,8 +20,14 @@ lifecycle{
   }
 }
 
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [aws_instance.web]
+
+  destroy_duration = "30s"
+}
 
 resource "null_resource" "script"{
+	depends_on=[time_sleep.wait_30_seconds, aws_instance.web]
   provisioner "local-exec" {
     #when    = destroy
     command = <<EOT
