@@ -123,7 +123,7 @@ terraform plan
 
 terraform apply -auto-approve || true
 
-sleep 120s
+sleep 30s
 
 terraform output -json my_publi_dns | jq -r . | head -1 > new_instance_data
 
