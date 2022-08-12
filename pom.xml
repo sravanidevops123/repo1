@@ -37,10 +37,7 @@
 
 <!-- download artifacts from this repo -->
 <repositories>
-  <repository>
-    <id>lti-nexus</id>
-    <url>http://13.235.69.177:8085/repository/vtdemo-snapshot/</url>
-    </repository>
+  
  
  <repository>
      <id>lti-nexus</id>
@@ -70,8 +67,12 @@
   </snapshots>
  </pluginRepository>
 </pluginRepositories>
-
-  
+ <repositories>
+  <repository>
+    <id>lti-nexus</id>
+    <url>http://13.235.69.177:8085/repository/vtdemo-snapshot/</url>
+    </repository>
+   </repositories>
   <dependencies>
     <dependency>
   <groupId>com.lti</groupId>
