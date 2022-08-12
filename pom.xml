@@ -38,7 +38,7 @@
 <!-- download artifacts from this repo -->
 <repositories>
   <repository>
-    <id>lti-nexus</id>
+    <id>lti-nexus-vtdemo</id>
     <url>http://13.235.69.177:8085/repository/vtdemo-snapshot/</url>
     </repository>
  
