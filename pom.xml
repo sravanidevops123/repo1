@@ -37,11 +37,7 @@
 
 <!-- download artifacts from this repo -->
 <repositories>
-  <repository>
-    <id>lti-nexus-vtdemo</id>
-    <url>http://13.235.69.177:8085/repository/vtdemo-snapshot/</url>
-    </repository>
- 
+  
  <repository>
      <id>lti-nexus</id>
   <name>lti</name>
@@ -73,12 +69,7 @@
  
     
   <dependencies>
-    <dependency>
-  <groupId>com.lti</groupId>
-  <artifactId>vtdemo</artifactId>
-  <version>1.0-20220811.131908-2</version>
-  <type>war</type>
-</dependency>
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
