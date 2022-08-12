@@ -37,9 +37,13 @@
 
 <!-- download artifacts from this repo -->
 <repositories>
+  <repository>
+    <id>lti-nexus</id>
+    <url>http://13.235.69.177:8085/repository/vtdemo-snapshot/</url>
+    </repository>
  
  <repository>
-  <id>lti-nexus</id>
+     <id>lti-nexus</id>
   <name>lti</name>
   <url>http://35.154.104.221:30983/repository/lti-central/</url>
   <releases>
